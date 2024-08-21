@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
@@ -5,23 +6,21 @@ const axios = require('axios');
 const app = express();
 app.use(express.json());
 
-
-const THINGSPEAK_API_KEY = 'GV9045VTF0P3JNQV';
-const THINGSPEAK_CHANNEL_ID = '2632362';
-
+const THINGSPEAK_API_KEY = process.env.THINGSPEAK_API_KEY;
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'smarthomeautomation757@gmail.com',
-        pass: 'smart2024'
+        user: EMAIL_USER,
+        pass: EMAIL_PASS
     }
 });
 
-
 function sendEmail() {
     const mailOptions = {
-        from: 'smarthomeautomation757@gmail.com',
+        from: EMAIL_USER,
         to: 'gpampa138@gmail.com',
         subject: 'Motion Detected at Door',
         html: `
@@ -42,7 +41,6 @@ function sendEmail() {
     });
 }
 
-
 async function updateThingSpeak(status) {
     try {
         const response = await axios.post(`https://api.thingspeak.com/update`, null, {
@@ -57,23 +55,23 @@ async function updateThingSpeak(status) {
     }
 }
 
-
 app.get('/open', (req, res) => {
+    console.log("open");
+    
     updateThingSpeak(1);  
     res.send('Door Opened');
 });
 
 app.get('/close', (req, res) => {
+    console.log("close");
     updateThingSpeak(0);  
     res.send('Door Closed');
 });
-
 
 app.post('/motion-detected', (req, res) => {
     sendEmail();
     res.send('Email sent!');
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
