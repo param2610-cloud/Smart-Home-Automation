@@ -22,13 +22,13 @@ const transporter = nodemailer.createTransport({
 function sendEmail() {
     const mailOptions = {
         from: 'smarthomeautomation757@gmail.com',
-        to: 'Chakraborty.nabanita05@gmail.com',
+        to: 'gpampa138@gmail.com',
         subject: 'Motion Detected at Door',
         html: `
             <p>Motion detected at the door. Do you want to open the door?</p>
             <p>
-                <a href="http://your-server-ip:5000/open">Yes</a> or 
-                <a href="http://your-server-ip:5000/close">No</a>
+                <a href="https://smart-home-automation.onrender.com/open">Yes</a> or 
+                <a href="https://smart-home-automation.onrender.com/close">No</a>
             </p>
         `
     };
