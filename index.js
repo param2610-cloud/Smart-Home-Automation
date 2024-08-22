@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 function sendEmail() {
     const mailOptions = {
         from: EMAIL_USER,
-        to: 'gpampa138@gmail.com',
+        to: 'chakraborty.nabanita05@gmail.com',
         subject: 'Motion Detected at Door',
         html: `
             <p>Motion detected at the door. Do you want to open the door?</p>
